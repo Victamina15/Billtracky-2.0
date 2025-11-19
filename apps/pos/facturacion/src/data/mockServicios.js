@@ -1,27 +1,27 @@
 /**
- * Servicios integrados con módulo CONFIGURACIÓN
- * Los servicios ahora se obtienen directamente del módulo de configuración
+ * Servicios integrados con backend API
+ * Los servicios se obtienen directamente del backend
  */
 
-// Importar desde el módulo CONFIGURACIÓN usando alias
-import { getServicios as getServiciosConfig } from '@configuracion/api/servicios';
-import { getCategorias as getCategoriasConfig } from '@configuracion/api/categorias';
+// Importar desde las APIs locales
+import { getServicios as getServiciosAPI } from '../api/servicios';
+import { getCategorias as getCategoriasAPI } from '../api/categorias';
 
 /**
- * Exportar categorías desde configuración
- * Ahora las categorías vienen del módulo de configuración
+ * Exportar categorías desde backend API
+ * Ahora las categorías vienen del backend
  */
 export const getCategorias = async () => {
-  return await getCategoriasConfig();
+  return await getCategoriasAPI();
 };
 
 /**
- * Obtener servicios desde el módulo CONFIGURACIÓN
+ * Obtener servicios desde el backend API
  * @param {string} categoria - ID de la categoría o 'todos'
  * @returns {Promise<Array>} Lista de servicios
  */
 export const getServicios = async (categoria = 'todos') => {
-  return await getServiciosConfig(categoria);
+  return await getServiciosAPI(categoria);
 };
 
 /**
