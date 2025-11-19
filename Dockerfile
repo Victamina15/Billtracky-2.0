@@ -4,13 +4,13 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Copiar archivos de dependencias
-COPY apps/pos/new-order/package*.json ./
+COPY apps/pos/facturacion/package*.json ./
 
 # Instalar dependencias
 RUN npm ci
 
 # Copiar el código fuente
-COPY apps/pos/new-order .
+COPY apps/pos/facturacion .
 
 # Construir la aplicación
 RUN npm run build

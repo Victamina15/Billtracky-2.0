@@ -3,7 +3,16 @@ Estructura inicial del monorepo Billtracky-2.0
 ## Aplicaciones
 - apps/
    - pos/
-      - new-order/ → Módulo de facturación POS (Nuevo Pedido) - Proyecto Vite funcional con React y TailwindCSS
+      - facturacion/ → **Módulo de Facturación POS** - Sistema completo de facturación con:
+        - React 19 + Vite 7 + TailwindCSS 3.4
+        - Estado global con Zustand 5.0
+        - Grid de servicios con búsqueda en tiempo real
+        - Carrito interactivo con gestión de cantidades
+        - Cálculo automático de ITBIS (18%)
+        - Selector de métodos de pago (Efectivo, Tarjeta, Transferencia)
+        - Diseño profesional estilo Shopify POS
+        - Preparado para integración con módulo CONFIGURACIÓN
+        - Ver `apps/pos/facturacion/README.md` para detalles completos
 
 ## Paquetes compartidos
 - packages/
