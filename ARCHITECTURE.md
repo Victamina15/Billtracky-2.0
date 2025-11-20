@@ -1,4 +1,21 @@
-Estructura del monorepo Billtracky-2.0
+# Billtracky-2.0
+
+> **NOTA IMPORTANTE**: Este es el proyecto principal activo de desarrollo.
+>
+> **Estructura de Proyectos**:
+> - `~/Desktop/billtracky-2` (este proyecto) → **PROYECTO PRINCIPAL ACTIVO**
+>   - Repositorio: https://github.com/Victamina15/billtracky-2.git
+>   - Todo el desarrollo nuevo se realiza aquí
+>   - Contiene: Dashboard integrado, Facturación, Configuración, API Backend
+>
+> - `~/Desktop/BillTracky-1` → **SOLO LECTURA** (referencia del sistema anterior)
+>   - Repositorio: https://github.com/Victamina15/Billtracky-1.git
+>   - Se usa únicamente como referencia del código viejo
+>   - NO modificar ni hacer commits aquí
+
+---
+
+## Estructura del monorepo Billtracky-2.0
 
 ## Aplicaciones
 
