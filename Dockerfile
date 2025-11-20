@@ -3,14 +3,14 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copiar archivos de dependencias
-COPY apps/pos/facturacion/package*.json ./
+# Copiar archivos de dependencias del dashboard
+COPY apps/pos/dashboard/package*.json ./
 
 # Instalar dependencias
 RUN npm ci
 
-# Copiar el código fuente
-COPY apps/pos/facturacion .
+# Copiar el código fuente del dashboard
+COPY apps/pos/dashboard .
 
 # Construir la aplicación
 RUN npm run build
