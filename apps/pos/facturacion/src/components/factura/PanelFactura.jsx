@@ -23,7 +23,6 @@ export default function PanelFactura() {
     const facturaData = getFacturaData();
 
     // TODO: Guardar en base de datos
-    console.log('Factura a guardar:', facturaData);
 
     toast.success('Factura completada', {
       description: `Total: ${facturaData.total.toFixed(2)}`,
