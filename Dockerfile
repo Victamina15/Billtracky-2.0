@@ -16,14 +16,8 @@ COPY apps/pos/dashboard ./apps/pos/dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/apps/pos/dashboard
 
-# Eliminar package-lock.json y node_modules (como sugiere el error)
-RUN rm -rf package-lock.json node_modules
-
-# Usar npm install en lugar de npm ci (npm ci tiene bug #4828)
-RUN npm install
-
-# Verificar instalación de binarios nativos
-RUN npm install @rollup/rollup-linux-x64-gnu lightningcss-linux-x64-gnu
+# Instalar dependencias (TailwindCSS v3 no requiere binarios nativos)
+RUN npm ci
 
 # Construir la aplicación
 RUN npm run build
