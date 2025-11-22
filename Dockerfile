@@ -18,13 +18,15 @@ COPY apps/pos/dashboard ./apps/pos/dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/apps/pos/dashboard
 
-# Instalar dependencias directamente en el dashboard
-# npm ci es más confiable para builds de producción
-RUN npm ci
+# Eliminar package-lock.json para evitar bug de npm con dependencias opcionales
+# https://github.com/npm/cli/issues/4828
+RUN rm -f package-lock.json
 
-# Instalar explícitamente los binarios nativos necesarios para Alpine Linux (musl)
-RUN npm install --save-optional @rollup/rollup-linux-x64-musl
-RUN npm install --save-optional lightningcss-linux-x64-musl
+# Instalar dependencias (npm install detecta correctamente dependencias opcionales en Alpine)
+RUN npm install
+
+# Verificar que los binarios nativos estén instalados
+RUN npm install @rollup/rollup-linux-x64-musl lightningcss-linux-x64-musl
 
 # Construir la aplicación
 RUN npm run build
