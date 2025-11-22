@@ -4,25 +4,24 @@ FROM node:20-slim AS builder
 
 WORKDIR /app
 
-# Copiar estructura de monorepo
+# Copiar package.json raíz y estructura completa del monorepo
+COPY package.json package-lock.json* ./
 COPY packages ./packages
-COPY apps/pos/dashboard ./apps/pos/dashboard
-
-# Cambiar al directorio del dashboard
-WORKDIR /app/apps/pos/dashboard
+COPY apps ./apps
 
 # FORZAR REBUILD
-ARG CACHEBUST=20241122005
+ARG CACHEBUST=20241122006
 RUN echo "=== BUILD: $CACHEBUST ==="
 
 # Limpiar
-RUN rm -rf node_modules package-lock.json
+RUN rm -rf node_modules apps/*/node_modules apps/*/*/node_modules package-lock.json
 
-# Instalar dependencias (Zod 3.23.8 con overrides)
+# Instalar desde la raíz (workspace) para que todos los packages tengan acceso a las deps
 RUN npm install
 
-# Instalar binarios nativos
-RUN npm install @rollup/rollup-linux-x64-gnu zod@3.23.8 --save-exact
+# Instalar binarios nativos específicos
+WORKDIR /app/apps/pos/dashboard
+RUN npm install @rollup/rollup-linux-x64-gnu --save-exact
 
 # Construir la aplicación
 RUN npm run build
