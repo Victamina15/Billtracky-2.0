@@ -1,22 +1,26 @@
 # Etapa 1: Build
 FROM node:20-alpine AS builder
 
+# Instalar dependencias de build necesarias para binarios nativos
+RUN apk add --no-cache python3 make g++
+
 WORKDIR /app
 
 # Copiar package.json raíz (monorepo workspace)
 COPY package*.json ./
 
-# Copiar packages compartidos
+# Copiar packages compartidos (necesarios para los imports)
 COPY packages ./packages
 
 # Copiar dashboard
 COPY apps/pos/dashboard ./apps/pos/dashboard
 
-# Instalar todas las dependencias del workspace
-RUN npm install
-
-# Cambiar al directorio del dashboard para hacer build
+# Cambiar al directorio del dashboard
 WORKDIR /app/apps/pos/dashboard
+
+# Instalar dependencias directamente en el dashboard
+# npm ci es más confiable para builds de producción
+RUN npm ci
 
 # Construir la aplicación
 RUN npm run build
