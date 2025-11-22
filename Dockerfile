@@ -1,8 +1,6 @@
 # Etapa 1: Build
-FROM node:20-alpine AS builder
-
-# Instalar dependencias de build necesarias para binarios nativos
-RUN apk add --no-cache python3 make g++
+# Usar Debian en lugar de Alpine para evitar problemas con binarios nativos musl
+FROM node:20-slim AS builder
 
 WORKDIR /app
 
@@ -18,20 +16,8 @@ COPY apps/pos/dashboard ./apps/pos/dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/apps/pos/dashboard
 
-# Limpiar completamente antes de instalar (package-lock.json y node_modules)
-# https://github.com/npm/cli/issues/4828
-RUN rm -rf package-lock.json node_modules
-
-# Instalar dependencias con variables de entorno para forzar binarios nativos Alpine
-ENV npm_config_arch=x64
-ENV npm_config_platform=linux
-ENV npm_config_libc=musl
-
-# Instalar dependencias
-RUN npm install
-
-# Forzar instalación/reinstalación de binarios nativos críticos para Alpine
-RUN npm install --force @rollup/rollup-linux-x64-musl lightningcss-linux-x64-musl
+# Instalar dependencias (Debian maneja correctamente binarios nativos)
+RUN npm ci
 
 # Construir la aplicación
 RUN npm run build
