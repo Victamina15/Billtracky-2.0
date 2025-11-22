@@ -14,7 +14,7 @@ COPY apps/pos/dashboard ./dashboard
 WORKDIR /app/dashboard
 
 # FORZAR REBUILD - cambiar este número para romper cache
-ARG CACHEBUST=20241122001
+ARG CACHEBUST=20241122002
 RUN echo "=== BUILD TIMESTAMP: $CACHEBUST ==="
 
 # Limpiar TODO

@@ -6,6 +6,9 @@ import fs from 'fs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+// Timestamp único para evitar cache
+const BUILD_ID = Date.now()
+
 // Detectar si estamos en Docker o desarrollo local
 // En Docker: /app/dashboard → packages está en /app/packages (../packages)
 // En local: apps/pos/dashboard → packages está en raíz (../../../packages)
@@ -39,6 +42,16 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'zustand', 'lucide-react', '@tanstack/react-query', '@tanstack/react-virtual', 'date-fns', 'react-datepicker', 'sonner'],
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        // Forzar nuevos hashes en cada build
+        entryFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+        chunkFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+        assetFileNames: `assets/[name]-[hash]-${Date.now()}.[ext]`
+      }
+    }
   },
   server: {
     port: 5175,
