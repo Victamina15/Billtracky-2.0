@@ -2,18 +2,25 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import fs from 'fs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+// Detectar si estamos en Docker o desarrollo local
+// En Docker: /app/dashboard → packages está en /app/packages (../packages)
+// En local: apps/pos/dashboard → packages está en raíz (../../../packages)
+const isDocker = !fs.existsSync(path.resolve(__dirname, '../../../packages'))
+const packagesPath = isDocker ? '../packages' : '../../../packages'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@billtracky/components': path.resolve(__dirname, '../../../packages/components'),
-      '@billtracky/stores': path.resolve(__dirname, '../../../packages/stores'),
-      '@billtracky/utils': path.resolve(__dirname, '../../../packages/utils'),
-      '@billtracky/api-client': path.resolve(__dirname, '../../../packages/api-client'),
+      '@billtracky/components': path.resolve(__dirname, `${packagesPath}/components`),
+      '@billtracky/stores': path.resolve(__dirname, `${packagesPath}/stores`),
+      '@billtracky/utils': path.resolve(__dirname, `${packagesPath}/utils`),
+      '@billtracky/api-client': path.resolve(__dirname, `${packagesPath}/api-client`),
       // Force resolve from dashboard's node_modules
       'react': path.resolve(__dirname, './node_modules/react'),
       'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
