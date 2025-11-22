@@ -11,30 +11,18 @@ COPY apps/pos/dashboard ./apps/pos/dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/apps/pos/dashboard
 
-# FORZAR REBUILD - cambiar este número para romper cache
-ARG CACHEBUST=20241122004
-RUN echo "=== BUILD TIMESTAMP: $CACHEBUST ==="
+# FORZAR REBUILD
+ARG CACHEBUST=20241122005
+RUN echo "=== BUILD: $CACHEBUST ==="
 
-# Limpiar TODO
-RUN rm -rf node_modules package-lock.json .npm
+# Limpiar
+RUN rm -rf node_modules package-lock.json
 
-# Mostrar package.json para verificar
-RUN echo "=== PACKAGE.JSON ZOD VERSION ===" && cat package.json | grep -A1 '"zod"'
-
-# Instalar dependencias
+# Instalar dependencias (Zod 3.23.8 con overrides)
 RUN npm install
 
-# VERIFICAR versión de Zod instalada
-RUN echo "=== INSTALLED ZOD VERSION ===" && npm list zod
-
-# Instalar explícitamente Zod 3.23.8 OTRA VEZ para forzar
-RUN npm install zod@3.23.8 --save-exact
-
-# Verificar NUEVAMENTE
-RUN echo "=== FINAL ZOD VERSION ===" && npm list zod
-
-# Instalar explícitamente binario nativo de Rollup para Debian
-RUN npm install @rollup/rollup-linux-x64-gnu
+# Instalar binarios nativos
+RUN npm install @rollup/rollup-linux-x64-gnu zod@3.23.8 --save-exact
 
 # Construir la aplicación
 RUN npm run build

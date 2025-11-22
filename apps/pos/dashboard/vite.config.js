@@ -26,9 +26,17 @@ export default defineConfig({
       '@billtracky/api-client': path.resolve(__dirname, `${packagesPath}/api-client`),
     },
     dedupe: ['react', 'react-dom', 'zustand', 'zod'],
+    // Asegurar que Vite busque dependencias en el node_modules del dashboard
+    preserveSymlinks: false,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'zustand', 'lucide-react', '@tanstack/react-query', '@tanstack/react-virtual', 'date-fns', 'react-datepicker', 'sonner'],
+    include: ['react', 'react-dom', 'zustand', 'lucide-react', '@tanstack/react-query', '@tanstack/react-virtual', 'date-fns', 'react-datepicker', 'sonner', 'zod'],
+    // Forzar que busque deps en node_modules del dashboard
+    force: true,
+  },
+  // NO externalizar ninguna dependencia - bundelar todo
+  ssr: {
+    noExternal: true,
   },
   build: {
     rollupOptions: {
