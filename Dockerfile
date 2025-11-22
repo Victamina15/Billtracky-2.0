@@ -13,6 +13,9 @@ COPY apps/pos/dashboard ./dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/dashboard
 
+# Limpiar cache y lockfile para forzar instalación limpia
+RUN rm -rf node_modules package-lock.json
+
 # Instalar dependencias directamente (sin workspaces de npm)
 RUN npm install
 
