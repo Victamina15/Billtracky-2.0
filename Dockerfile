@@ -16,8 +16,12 @@ COPY apps/pos/dashboard ./apps/pos/dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/apps/pos/dashboard
 
-# Instalar dependencias (TailwindCSS v3 no requiere binarios nativos)
+# Instalar dependencias
 RUN npm ci
+
+# Instalar explícitamente binario nativo de Rollup para Debian
+# npm ci tiene bug con dependencias opcionales: https://github.com/npm/cli/issues/4828
+RUN npm install @rollup/rollup-linux-x64-gnu
 
 # Construir la aplicación
 RUN npm run build
