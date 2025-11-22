@@ -4,17 +4,15 @@ FROM node:20-slim AS builder
 
 WORKDIR /app
 
-# Copiar packages compartidos (necesarios para los imports)
+# Copiar estructura de monorepo
 COPY packages ./packages
-
-# Copiar dashboard
-COPY apps/pos/dashboard ./dashboard
+COPY apps/pos/dashboard ./apps/pos/dashboard
 
 # Cambiar al directorio del dashboard
-WORKDIR /app/dashboard
+WORKDIR /app/apps/pos/dashboard
 
 # FORZAR REBUILD - cambiar este número para romper cache
-ARG CACHEBUST=20241122003
+ARG CACHEBUST=20241122004
 RUN echo "=== BUILD TIMESTAMP: $CACHEBUST ==="
 
 # Limpiar TODO
@@ -45,7 +43,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copiar archivos build a nginx
-COPY --from=builder /app/dashboard/dist /usr/share/nginx/html
+COPY --from=builder /app/apps/pos/dashboard/dist /usr/share/nginx/html
 
 # Copiar configuración personalizada de nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
