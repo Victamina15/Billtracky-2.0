@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'sonner'
+import { ErrorBoundary } from './ErrorBoundary'
 import { MainLayout } from './layout/MainLayout'
 import { InicioPage } from './pages/Inicio'
 import { FacturacionNuevaPage } from './pages/FacturacionNueva'
@@ -19,29 +20,33 @@ const queryClient = new QueryClient({
 })
 
 function App() {
+  console.log('App component is rendering')
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            {/* Redirect root to inicio */}
-            <Route index element={<Navigate to="/inicio" replace />} />
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              {/* Redirect root to inicio */}
+              <Route index element={<Navigate to="/inicio" replace />} />
 
-            {/* Main routes */}
-            <Route path="inicio" element={<InicioPage />} />
-            <Route path="facturacion/nueva" element={<FacturacionNuevaPage />} />
-            <Route path="configuracion/servicios" element={<ConfiguracionServiciosPage />} />
-            <Route path="configuracion/metodos-pago" element={<ConfiguracionMetodosPagoPage />} />
+              {/* Main routes */}
+              <Route path="inicio" element={<InicioPage />} />
+              <Route path="facturacion/nueva" element={<FacturacionNuevaPage />} />
+              <Route path="configuracion/servicios" element={<ConfiguracionServiciosPage />} />
+              <Route path="configuracion/metodos-pago" element={<ConfiguracionMetodosPagoPage />} />
 
-            {/* 404 fallback */}
-            <Route path="*" element={<Navigate to="/inicio" replace />} />
-          </Route>
-        </Routes>
-      </Router>
+              {/* 404 fallback */}
+              <Route path="*" element={<Navigate to="/inicio" replace />} />
+            </Route>
+          </Routes>
+        </Router>
 
-      {/* Toaster for notifications */}
-      <Toaster position="top-right" richColors />
-    </QueryClientProvider>
+        {/* Toaster for notifications */}
+        <Toaster position="top-right" richColors />
+      </QueryClientProvider>
+    </ErrorBoundary>
   )
 }
 
