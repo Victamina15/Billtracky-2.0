@@ -1,0 +1,15 @@
+{
+  "name": "billtracky-2-monorepo",
+  "version": "2.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/pos/dashboard",
+    "apps/api",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "cd apps/pos/dashboard && npm run dev",
+    "build": "cd apps/pos/dashboard && npm run build",
+    "api": "cd apps/api && npm run dev"
+  }
+}

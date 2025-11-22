@@ -3,7 +3,7 @@
  */
 
 // Importar desde la API local
-import { getMetodosPago as getMetodosPagoAPI } from '../../api/metodosPago';
+import { getMetodosPago as getMetodosPagoAPI } from '@billtracky/api-client/metodosPago';
 
 // Datos de respaldo para cuando el backend no está disponible
 const METODOS_PAGO_FALLBACK = [

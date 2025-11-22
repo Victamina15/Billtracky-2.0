@@ -1,7 +1,7 @@
-import ClienteSelector from '../components/facturacion/layout/ClienteSelector'
-import FechaEntregaSelector from '../components/facturacion/layout/FechaEntregaSelector'
-import ListaServicios from '../components/facturacion/servicios/ListaServicios'
-import PanelFactura from '../components/facturacion/factura/PanelFactura'
+import ClienteSelector from '@billtracky/components/layout/ClienteSelector'
+import FechaEntregaSelector from '@billtracky/components/layout/FechaEntregaSelector'
+import ListaServicios from '@billtracky/components/servicios/ListaServicios'
+import PanelFactura from '@billtracky/components/factura/PanelFactura'
 
 export function FacturacionNuevaPage() {
   return (

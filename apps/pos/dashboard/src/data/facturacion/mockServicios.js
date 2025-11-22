@@ -3,8 +3,8 @@
  */
 
 // Importar desde las APIs locales
-import { getServicios as getServiciosAPI } from '../../api/servicios';
-import { getCategorias as getCategoriasAPI } from '../../api/categorias';
+import { getServicios as getServiciosAPI } from '@billtracky/api-client/servicios';
+import { getCategorias as getCategoriasAPI } from '@billtracky/api-client/categorias';
 
 // Datos de respaldo para cuando el backend no está disponible
 const CATEGORIAS_FALLBACK = [

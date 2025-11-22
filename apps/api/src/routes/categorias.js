@@ -1,28 +1,31 @@
 import express from 'express';
-import { query } from '../config/database.js';
+import {
+  getCategorias,
+  getCategoriaById,
+  createCategoria,
+  updateCategoria,
+  deleteCategoria,
+  toggleCategoria,
+} from '../controllers/categorias.controller.js';
 
 const router = express.Router();
 
 // GET /api/categorias - Listar todas las categorías
-router.get('/', async (req, res, next) => {
-  try {
-    // Incluir "Todos" como opción
-    const result = await query(
-      'SELECT * FROM categorias WHERE activo = true ORDER BY nombre'
-    );
+router.get('/', getCategorias);
 
-    const categorias = [
-      { id: 'todos', nombre: 'Todos', color: '#6B7280' },
-      ...result.rows,
-    ];
+// GET /api/categorias/:id - Obtener categoría específica
+router.get('/:id', getCategoriaById);
 
-    res.json({ success: true, data: categorias });
-  } catch (error) {
-    next(error);
-  }
-});
+// POST /api/categorias - Crear nueva categoría
+router.post('/', createCategoria);
 
-// Demás endpoints siguiendo el patrón de servicios.controller.js
-// TODO: Implementar POST, PUT, DELETE, PATCH
+// PUT /api/categorias/:id - Actualizar categoría
+router.put('/:id', updateCategoria);
+
+// DELETE /api/categorias/:id - Eliminar categoría
+router.delete('/:id', deleteCategoria);
+
+// PATCH /api/categorias/:id/toggle - Activar/desactivar
+router.patch('/:id/toggle', toggleCategoria);
 
 export default router;

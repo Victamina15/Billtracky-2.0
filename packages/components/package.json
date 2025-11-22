@@ -1,0 +1,12 @@
+{
+  "name": "@billtracky/components",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    "./layout/*": "./layout/*.jsx",
+    "./servicios/*": "./servicios/*.jsx",
+    "./factura/*": "./factura/*.jsx",
+    "./configuracion/*": "./configuracion/*/*.jsx"
+  }
+}

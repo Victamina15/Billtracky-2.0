@@ -1,4 +1,4 @@
-import ListaServicios from '../components/configuracion/servicios/ListaServicios'
+import ListaServicios from '@billtracky/components/configuracion/servicios/ListaServicios'
 
 export function ConfiguracionServiciosPage() {
   return (

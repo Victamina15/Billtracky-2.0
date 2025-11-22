@@ -1,4 +1,4 @@
-import ListaMetodosPago from '../components/configuracion/metodosPago/ListaMetodosPago'
+import ListaMetodosPago from '@billtracky/components/configuracion/metodosPago/ListaMetodosPago'
 
 export function ConfiguracionMetodosPagoPage() {
   return (

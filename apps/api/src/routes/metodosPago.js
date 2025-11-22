@@ -1,22 +1,31 @@
 import express from 'express';
-import { query } from '../config/database.js';
+import {
+  getMetodosPago,
+  getMetodoPagoById,
+  createMetodoPago,
+  updateMetodoPago,
+  deleteMetodoPago,
+  toggleMetodoPago,
+} from '../controllers/metodosPago.controller.js';
 
 const router = express.Router();
 
-// GET /api/metodos-pago - Listar métodos de pago activos
-router.get('/', async (req, res, next) => {
-  try {
-    const result = await query(
-      'SELECT * FROM metodos_pago WHERE activo = true ORDER BY nombre'
-    );
+// GET /api/metodos-pago - Listar todos los métodos de pago
+router.get('/', getMetodosPago);
 
-    res.json({ success: true, data: result.rows });
-  } catch (error) {
-    next(error);
-  }
-});
+// GET /api/metodos-pago/:id - Obtener método de pago específico
+router.get('/:id', getMetodoPagoById);
 
-// Demás endpoints siguiendo el patrón de servicios.controller.js
-// TODO: Implementar POST, PUT, DELETE, PATCH
+// POST /api/metodos-pago - Crear nuevo método de pago
+router.post('/', createMetodoPago);
+
+// PUT /api/metodos-pago/:id - Actualizar método de pago
+router.put('/:id', updateMetodoPago);
+
+// DELETE /api/metodos-pago/:id - Eliminar método de pago
+router.delete('/:id', deleteMetodoPago);
+
+// PATCH /api/metodos-pago/:id/toggle - Activar/desactivar
+router.patch('/:id/toggle', toggleMetodoPago);
 
 export default router;
