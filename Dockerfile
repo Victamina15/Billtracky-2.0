@@ -18,15 +18,20 @@ COPY apps/pos/dashboard ./apps/pos/dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/apps/pos/dashboard
 
-# Eliminar package-lock.json para evitar bug de npm con dependencias opcionales
+# Limpiar completamente antes de instalar (package-lock.json y node_modules)
 # https://github.com/npm/cli/issues/4828
-RUN rm -f package-lock.json
+RUN rm -rf package-lock.json node_modules
 
-# Instalar dependencias (npm install detecta correctamente dependencias opcionales en Alpine)
+# Instalar dependencias con variables de entorno para forzar binarios nativos Alpine
+ENV npm_config_arch=x64
+ENV npm_config_platform=linux
+ENV npm_config_libc=musl
+
+# Instalar dependencias
 RUN npm install
 
-# Verificar que los binarios nativos estén instalados
-RUN npm install @rollup/rollup-linux-x64-musl lightningcss-linux-x64-musl
+# Forzar instalación/reinstalación de binarios nativos críticos para Alpine
+RUN npm install --force @rollup/rollup-linux-x64-musl lightningcss-linux-x64-musl
 
 # Construir la aplicación
 RUN npm run build
