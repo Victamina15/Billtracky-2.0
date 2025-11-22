@@ -13,10 +13,14 @@ COPY apps/pos/dashboard ./dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/dashboard
 
-# Limpiar cache y lockfile para forzar instalación limpia
+# Romper cache de Docker con timestamp
+ARG CACHEBUST=2024
+RUN echo "Build timestamp: $CACHEBUST"
+
+# Limpiar completamente
 RUN rm -rf node_modules package-lock.json
 
-# Instalar dependencias directamente (sin workspaces de npm)
+# Instalar dependencias (package.json tiene overrides para forzar Zod 3.23.8)
 RUN npm install
 
 # Instalar explícitamente binario nativo de Rollup para Debian
