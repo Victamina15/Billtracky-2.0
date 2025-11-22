@@ -22,6 +22,9 @@ WORKDIR /app/apps/pos/dashboard
 # npm ci es más confiable para builds de producción
 RUN npm ci
 
+# Instalar explícitamente el binario de Rollup para Alpine Linux (musl)
+RUN npm install --save-optional @rollup/rollup-linux-x64-musl
+
 # Construir la aplicación
 RUN npm run build
 
