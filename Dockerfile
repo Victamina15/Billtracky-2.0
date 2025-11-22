@@ -16,11 +16,13 @@ COPY apps/pos/dashboard ./apps/pos/dashboard
 # Cambiar al directorio del dashboard
 WORKDIR /app/apps/pos/dashboard
 
-# Instalar dependencias
-RUN npm ci
+# Eliminar package-lock.json y node_modules (como sugiere el error)
+RUN rm -rf package-lock.json node_modules
 
-# Instalar explícitamente binarios nativos para Debian (glibc/gnu)
-# npm ci tiene bug con dependencias opcionales: https://github.com/npm/cli/issues/4828
+# Usar npm install en lugar de npm ci (npm ci tiene bug #4828)
+RUN npm install
+
+# Verificar instalación de binarios nativos
 RUN npm install @rollup/rollup-linux-x64-gnu lightningcss-linux-x64-gnu
 
 # Construir la aplicación
